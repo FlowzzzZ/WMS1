@@ -27,7 +27,7 @@
 
 		<script src="bootstrap-table-develop/src/extensions/toolbar/bootstrap-table-toolbar.js"></script>
 		<script src="bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
-		<script src="js/explan/explan.js"></script>
+		<script src="js/exhistory/exhistory.js"></script>
 		<script src="js/datepicker.js"></script>
 		<script src="bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 		<script src="bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
@@ -82,6 +82,12 @@
 		
 
 		<div id="toolbar" class="btn-group">
+			<button id="btn_search" type="button" class="btn btn-default">
+ 				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
+ 			</button>
+			<button id="btn_refresh" type="button" class="btn btn-default">
+ 				<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>刷新
+ 			</button>
 			<button id="btn_add" type="button" class="btn btn-default btn_add">
  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
  			</button>
@@ -91,9 +97,7 @@
 			<button id="btn_delete" type="button" class="btn btn-default">
  				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
  			</button>
- 			<button id="btn_search" type="button" class="btn btn-default">
- 				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>搜索
- 			</button>
+ 			
  			
 		</div>
 
