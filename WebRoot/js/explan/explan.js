@@ -20,8 +20,8 @@ var TableInit = function() {
 		$('#table').bootstrapTable({
 			url: basePath + "/WmsExplan/queryAllExplan.action", //url一般是请求后台的url地址,调用ajax获取数据。
 			method: "post", //使用post请求到服务器获取数据
-			dataType: "JSON",//获得数据类型
-			contentType: 'application/json',//发送数据类型
+			dataType: "JSON",//发送数据类型
+			contentType: 'application/json',//接收数据类型
 			
 			toolbar: '#toolbar', //工具按钮用哪个容器
 			checkboxHeader: false,//取消表格头的复选框
@@ -38,16 +38,9 @@ var TableInit = function() {
 			pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
 			
 			
-			/*exportDataType:'basic',
+			exportDataType:'all',
 			exportTypes:['excel'],
-			exportOptions:{  
-	           ignoreColumn: [0,1],  //忽略某一列的索引  
-		           fileName: '总台帐报表',  //文件名称设置  
-		           worksheetName: 'sheet1',  //表格工作区名称  
-		           tableName: '总台帐报表',  
-		           excelstyles: ['background-color', 'color', 'font-size', 'font-weight'],  
-		           
-		       }, */
+			
 		    showExport: true,
 		    Icons:'glyphicon-export', 
 			
@@ -70,8 +63,9 @@ var TableInit = function() {
 			
 			//列名
 			columns: [{
-
-					checkbox: true
+					
+					checkbox: true,
+					
 
 				},
 				{
@@ -88,8 +82,9 @@ var TableInit = function() {
 					title: '货品',
 					align: "center",
 					valign: "middle",
+					
 					formatter: function(value, row, index) {
-						return '<a href="" class="glyphicon glyphicon-list"></a>';
+						return '<a href="'+value+'" class="glyphicon glyphicon-list"></a>';
 					}//单元格内显示的方式
 				}, {
 					field: 'explanNumber',
@@ -445,6 +440,7 @@ var ButtonInit = function() {
 		//编辑
 		$('#btn_edit').click(function() {
 			//显示modal的标题
+			
 			$("#myModalLabelEdit").removeClass("hidden");
 			var row;
 			var sel = $table.bootstrapTable('getSelections');
@@ -454,6 +450,7 @@ var ButtonInit = function() {
 			} else {
 				row = $table.bootstrapTable('getSelections')[0];
 			};
+			
 			//清除modal缓存
 			$(".able-delete").children('option').remove();
 			$("input[name='isbonded']").prop("checked", false);
@@ -500,7 +497,7 @@ var ButtonInit = function() {
 			$('#shippingmethod').val(row.shippingmethod);
 			$('#clearingform').val(row.clearingform);
 			$('#expressnumber').val(row.expressnumber);
-			$('#clientname').val(row.clientname);
+			$('#clientname').val(row.shipperId);
 			
 			//动态加载下拉框
 			$.ajax({
@@ -669,7 +666,14 @@ var ButtonInit = function() {
 				$('#search').modal('show');
 
 		});
-
+		
+		//导出
+//		$('#btn_export').click(function(){
+//			$('#table').tableExport({ 
+//				type: 'excel', 
+//				escape: 'false',
+//				exportDataType: 'all'})
+//		})
 	};
 
 	return oInit;

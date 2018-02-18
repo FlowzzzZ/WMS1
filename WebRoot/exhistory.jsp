@@ -11,9 +11,11 @@
 		<%
 		String basePath = request.getContextPath();
 		%>
+		
 		<link href="bootstrap-table-develop/dist/bootstrap-table.css" rel="stylesheet">
 		<link href="bootstrap-table-develop/docs/assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
 		<link href="css/toolbar.css" rel="stylesheet">
+		
 		<link href="bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 		
 		
@@ -22,9 +24,10 @@
 		var basePath = "<%=basePath %>";
 		</script>
 		<script src="bootstrap-table-develop/docs/assets/js/jquery-3.2.1.js"></script>
+		<script src="jquery-ui-1.12.1/jquery-ui.js"></script>
 		<script src="bootstrap-table-develop/docs/assets/bootstrap/js/bootstrap.js"></script>
 		<script src="bootstrap-table-develop/src/bootstrap-table.js"></script>
-
+		<script src="printThis-master/printThis.js"></script>
 		<script src="bootstrap-table-develop/src/extensions/toolbar/bootstrap-table-toolbar.js"></script>
 		<script src="bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
 		<script src="js/exhistory/exhistory.js"></script>
@@ -88,14 +91,17 @@
 			<button id="btn_refresh" type="button" class="btn btn-default">
  				<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>刷新
  			</button>
-			<button id="btn_add" type="button" class="btn btn-default btn_add">
- 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+			<button id="btn_export" type="button" class="btn btn-default">
+ 				<span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
  			</button>
-			<button id="btn_edit" type="button" class="btn btn-default">
- 				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+			<button id="btn_followExport" type="button" class="btn btn-default">
+ 				<span class="glyphicon glyphicon-print" aria-hidden="true"></span>同行单打印
  			</button>
-			<button id="btn_delete" type="button" class="btn btn-default">
- 				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+			<button id="btn_pickExport" type="button" class="btn btn-default">
+ 				<span class="glyphicon glyphicon-print" aria-hidden="true"></span>拣货单打印
+ 			</button>
+ 			<button id="btn_express" type="button" class="btn btn-default">
+ 				<span class="glyphicon glyphicon-file" aria-hidden="true"></span>快递导出
  			</button>
  			
  			
@@ -109,337 +115,11 @@
 		<!--模态框-->
 		
 			
-		<!--新增修改界面-->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document" style="width:1000px">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-						<h4 class="modal-title hidden" id="myModalLabelAdd">新增</h4>
-						<h4 class="modal-title hidden" id="myModalLabelEdit">修改</h4>
-					</div>
-					
-					<div class="modal-body ">
-
-						
-							
-  						<!-- 序号 -->	
-  						<input type="hidden" name="explanId" class="form-control " id="explanId"  " >	
-  							
-							
-						
-						
-						
-						<div class="form-group row" >
-							<div class="col-md-2">
-								<label for="explanNumber">出库编号</label>
-								
-							</div>
-  							<div class="col-md-10">
-  								<input type="text" name="explanNumber" class="form-control " id="explanNumber" placeholder="出库编号" readonly="readonly" >	
-  							</div>
-							
-						</div>
-
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="clientname" >货主</label>
-							</div>
-							<div class="col-md-10">
-							<select name="clientname" class="form-control able-delete clientname" id="clientname">
-							</select>
-							</div>
-						</div>
-						
-						
-
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="customerId">客户序号</label>
-							</div>
-							<div class="col-md-10">
-							<input type="text" name="customerId" class="form-control" id="customerId" placeholder="客户序号">
-							
-							</div>
-
-						</div>
-
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="customername">客户名称</label>
-							</div>
-							<div class="col-md-10">
-							<input type="text" name="customername" class="form-control" id="customername" placeholder="客户名称">
-							
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="fromaddress">发货地址</label>
-							</div>
-							<div class="col-md-10">
-							<input type="text" name="fromaddress" class="form-control" id="fromaddress" placeholder="发货地址">
-							
-							</div>
-							
-						</div>
-
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="toaddress">送货地址</label>
-							</div>
-							<div class="col-md-10">
-							<input type="text" name="toaddress" class="form-control" id="toaddress" placeholder="送货地址">
-							
-							</div>
-							
-							
-						</div>
-
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="exdate">出库日期</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="exdate" class="form-control date-picker" id="exdate" placeholder="出库日期">
-							</div>
-							
-							
-						</div>
-
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="businesstype">业务类型</label>
-							</div>
-							<div class="col-md-10">
-								<select name="businesstype" class="form-control" id="businesstype">
-								<option value="">===请选择===</option>
-								<option value="1">销售</option>
-								<option value="2">移库</option>
-								<option value="3">采退</option>
-								<option value="4">赠品</option>
-								<option value="5">换货</option>
-								<option value="6">其它</option>
-								<option value="7">销毁</option>
-							</select>
-								
-							</div>
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="isbonded" >是否保税</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="checkbox" name="isbonded" class="form-control" id="isbonded" >
-							</div>
-							
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="storagetransportationrequirement">储运要求</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="storagetransportationrequirement" class="form-control" id="storagetransportationrequirement" placeholder="储运要求">
-							</div>
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="issupervision">是否监管</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="checkbox" name="issupervision" class="form-control" id="issupervision" placeholder="是否监管">
-							</div>
-							
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="customernumber">客户单号</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="customernumber" class="form-control" id="customernumber" placeholder="客户单号">
-							</div>
-							
-						
-						</div>
-						
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="servicename" >客服名称</label>
-							</div>
-							<div class="col-md-10">
-							<select name="servicename" class="form-control able-delete servicename" id="servicename">
-							</select>
-							</div>
-						</div>
-						
-						
-						
-						
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="contactman">联系人</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="contactman" class="form-control" id="contactman" placeholder="联系人">
-							</div>
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="contacttel">联系电话</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="contacttel" class="form-control" id="contacttel" placeholder="联系电话">
-							</div>
-							
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="planstatus">计划状态</label>
-							</div>
-							<div class="col-md-10">
-								<select name="planstatus" class="form-control" id="planstatus">
-								<option value="">===请选择===</option>
-								<option value="1">新建</option>
-								<option value="2">执行中</option>
-								<option value="3">部分出库</option>
-								<option value="4">出库完成</option>
-								<option value="5">历史出库</option>
-								<option value="6">人工关闭</option>
-								
-							</select>
-								
-							</div>
-							
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="exorderquantity">出库单数量</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="exorderquantity" class="form-control" id="exorderquantity" placeholder="出库单数量">
-							</div>
-							
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="remark">备注</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="remark" class="form-control" id="remark" placeholder="备注">
-							</div>
-							
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="makeorderdate">制单日期</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="makeorderdate" class="form-control date-picker" id="makeorderdate" placeholder="制单日期">
-							</div>
-							
-							
-						</div>
-						
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="makeorderman">制单人</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="makeorderman" class="form-control " id="makeorderman" placeholder="制单人">
-							</div>
-							
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="storehouseId">仓库序号</label>
-							</div>
-							<div class="col-md-10">
-							<select name="storehouseId" class="form-control able-delete storehouseId" id="storehouseId">
-							</select>
-								
-							</div>
-							
-							
-						</div>
-						
-						
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="express">快递公司</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="express" class="form-control" id="express" placeholder="快递公司">
-							</div>
-							
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="shippingmethod">运送方式</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="shippingmethod" class="form-control" id="shippingmethod" placeholder="运送方式">
-							</div>
-							
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="clearingform">结算方式</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="clearingform" class="form-control" id="clearingform" placeholder="结算方式">
-							</div>
-							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-2">	
-								<label for="expressnumber">快递单号</label>
-							</div>
-							<div class="col-md-10">
-							
-								<input type="text" name="expressnumber" class="form-control" id="expressnumber" placeholder="快递单号">
-							</div>
-							
-							
-						</div>
-						
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
-						<button type="button" id="btn_submit" class="btn btn-primary btn_submit" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
-					</div>
-				</div>
-			</div>
-		</div>
+		
+		
 		
 		<!--搜索界面-->
-		<div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal fade" id="search" tabindex="-1" role="dialog" >
 			<div class="modal-dialog" role="document" style="width:500x">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -450,42 +130,44 @@
 					<div class="modal-body ">
 						
 						<div class="form-group row" >
-							<div class="col-md-2">
-								<label for="customername1">客户名称</label>
+							<div class="col-md-3">
+								<label for="exhistoryNumer">出库历史编号</label>
 								
 							</div>
-  							<div class="col-md-10">
-  								<input type="text" name="customername1" class="form-control " id="customername1" placeholder="客户名称" >	
+  							<div class="col-md-9">
+  								<input type="text" name="exhistoryNumer" class="form-control " id="exhistoryNumer" placeholder="出库历史编号" >	
+  							</div>
+							
+						</div>
+						
+						<div class="form-group row">
+							<div class="col-md-3">	
+								<label for="principalname" >委托方企业名称</label>
+							</div>
+							<div class="col-md-9">
+							<select name="principalname" class="form-control able-delete principalname" id="principalname">
+							</select>
+							</div>
+						</div>
+						
+						<div class="form-group row" >
+							<div class="col-md-3">
+								<label for="receivingcustomername">收货客户名称</label>
+								
+							</div>
+  							<div class="col-md-9">
+  								<input type="text" name="receivingcustomername" class="form-control " id="receivingcustomername" placeholder="收货客户名称" >	
   							</div>
 							
 						</div>
 						
 						<div class="form-group row" >
-							<div class="col-md-2">
-								<label for="customernumber1">客户单号</label>
+							<div class="col-md-3">
+								<label for="receivingaddress">收货地址</label>
 								
 							</div>
-  							<div class="col-md-10">
-  								<input type="text" name="customernumber1" class="form-control " id="customernumber1" placeholder="客户单号" >	
-  							</div>
-							
-						</div>
-						
-						<div class="form-group row" >
-							<div class="col-md-2">
-								<label for="ENDate">录入日期</label>
-								
-							</div>
-							
-							<div class="col-md-4">
-								<input type="text" name="ENDate1" class="form-control ENDate" id="ENDate1" placeholder="录入日期">
-								
-							</div>
-  							<div class="col-md-2 text-center vertical-middle-sm"  >
-  								<label for="ENDate">至</label>	
-  							</div>
-  							<div class="col-md-4">
-  								<input type="text" name="ENDate2" class="form-control ENDate" id="ENDate2" placeholder="录入日期" >	
+  							<div class="col-md-9">
+  								<input type="text" name="receivingaddress" class="form-control " id="receivingaddress" placeholder="收货地址" >	
   							</div>
 							
 						</div>
@@ -500,6 +182,87 @@
 				</div>
 			</div>
 		</div>
+		
+		<!--同行+拣货单-->
+		<div class="modal " id="followPickExport"  tabindex="-1" role="dialog" >
+			<div class="modal-dialog" role="document" style="width:300px">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span></button>
+						<h5 class="modal-title hidden" id="myModalLabelFollow">随货同行单打印</h5>
+						<h5 class="modal-title hidden" id="myModalLabelPick">拣货单打印</h5>
+					</div>
+					
+					<div class="modal-body ">
+						
+						<div class="form-group row" >
+							<div class="col-md-9">
+								
+								<input type="text" name="exhistoryNumer" class="form-control " id="exhistoryNumer" placeholder="请输入出库编号" >	
+							</div>
+  							<div class="col-md-3">
+  								<button type="button" class="btn btn-default" id="beginPrint">打印</button>
+  							</div>
+							
+						</div>
+						
+						
+						
+						
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		<!--打印界面 -->
+		    <!-- 二维码弹出框 -->  
+    <div class="modal fade" id="myModal_qrcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  
+        <div class="modal-dialog" role="document">  
+            <div class="modal-content">  
+                <div class="modal-header">  
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">  
+                        <span aria-hidden="true">×</span>  
+                    </button>  
+                    <h4 class="modal-title" id="myModalLabel">二维码</h4>  
+                </div>  
+                <div class="modal-body">  
+                    <center>  
+                        <div id="qrcode"></div>  
+                        <table>  
+                            <tbody>  
+                                <tr>  
+                                    <td>  
+                                     <label class="col-sm-4 control-label" for="equ_name_qrcode"><h7>设备名称:</h7></label>  
+                                     <div class="col-sm-8">  
+                                         <input class="form-control" id="equ_name_qrcode" type="text"/>  
+                                     </div>  
+                                    </td>  
+                                    <td>  
+                                        <label class="col-sm-4 control-label" for="equ_ip_qrcode"><h7>设备IP:</h7></label>  
+                                        <div class="col-sm-8">  
+                                        <input class="form-control" id="equ_ip_qrcode" type="text"/>  
+                                        </div>  
+                                    </td>  
+                                </tr>  
+                            </tbody>  
+                        </table>  
+                    </center>  
+                </div>  
+                <div class="modal-footer">  
+                    <button type="button" class="btn btn-default" data-dismiss="modal">  
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭  
+                    </button>  
+                    <button type="button" id="btn_print" class="btn btn-primary" data-dismiss="modal">  
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>打印  
+                    </button>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+		
 
 	</body>
 

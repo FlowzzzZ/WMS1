@@ -11,27 +11,31 @@
 		<%
 		String basePath = request.getContextPath();
 		%>
-		<link href="bootstrap-table-develop/dist/bootstrap-table.css" rel="stylesheet">
-		<link href="bootstrap-table-develop/docs/assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
+		<link href="Tools/bootstrap-table-develop/dist/bootstrap-table.css" rel="stylesheet">
+		<link href="Tools/bootstrap-table-develop/docs/assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
 		<link href="css/toolbar.css" rel="stylesheet">
-		<link href="bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+		<link href="Tools/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 		
 		
 		<script type="text/javascript">
 		
 		var basePath = "<%=basePath %>";
 		</script>
-		<script src="bootstrap-table-develop/docs/assets/js/jquery-3.2.1.js"></script>
-		<script src="bootstrap-table-develop/docs/assets/bootstrap/js/bootstrap.js"></script>
-		<script src="bootstrap-table-develop/src/bootstrap-table.js"></script>
-
-		<script src="bootstrap-table-develop/src/extensions/toolbar/bootstrap-table-toolbar.js"></script>
-		<script src="bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
+		<script src="Tools/bootstrap-table-develop/docs/assets/js/jquery-3.2.1.js"></script>
+		<script src="Tools/bootstrap-table-develop/docs/assets/bootstrap/js/bootstrap.js"></script>
+		<script src="Tools/bootstrap-table-develop/src/bootstrap-table.js"></script>
+		<script src="Tools/tableExport.jquery.plugin-master/tableExport.js"></script>
+		
+		<script src="Tools/bootstrap-table-develop/src/extensions/export/bootstrap-table-export.js"></script>
+		<script src="Tools/bootstrap-table-develop/src/extensions/toolbar/bootstrap-table-toolbar.js"></script>
+		
+		<script src="Tools/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
 		<script src="js/explan/explan.js"></script>
 		<script src="js/datepicker.js"></script>
-		<script src="bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-		<script src="bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-	    <script src="bootstrap-table-develop/src/extensions/export/bootstrap-table-export.js"></script>
+		<script src="Tools/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+		<script src="Tools/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	    
+	    <script src="Tools/bootstrap-table-develop/src/extensions/export/bootstrap-table-export.js"></script>
 	</head>
 
 	<body>
@@ -93,6 +97,9 @@
  			</button>
  			<button id="btn_search" type="button" class="btn btn-default">
  				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>搜索
+ 			</button>
+ 			<button id="btn_export" type="button" class="btn btn-default">
+ 				<span class="glyphicon glyphicon-export export-excel" aria-hidden="true"></span>导出
  			</button>
  			
 		</div>
